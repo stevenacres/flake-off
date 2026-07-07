@@ -193,7 +193,7 @@ const year = new Date().getFullYear();
       <nav class="nav" aria-label="Page sections">
         {nav.map((item) => <a href={item.href}>{item.label}</a>)}
       </nav>
-      <a href="#regimen" class="nav-cta">The routine</a>
+      <a href="#regimen" class="nav-cta button-on-dark">The routine</a>
     </header>
 
     <main>
@@ -208,7 +208,7 @@ const year = new Date().getFullYear();
               weekly antifungal, a gentle cleanser, and barrier repair.
             </p>
             <div class="hero-actions">
-              <a href="#regimen" class="button button-primary">See the routine</a>
+              <a href="#regimen" class="button button-primary button-on-dark">See the routine</a>
               <a href="#science" class="button button-secondary">Read the mechanism</a>
             </div>
             <p class="microcopy">
@@ -341,7 +341,7 @@ const year = new Date().getFullYear();
               <h3>{p.name}</h3>
               <p>{p.blurb}</p>
               <strong>{p.price}</strong>
-              <a href={p.link} rel="nofollow sponsored">Get it on Amazon</a>
+              <a href={p.link} class="button-on-dark" rel="nofollow sponsored">Get it on Amazon</a>
             </article>
           ))}
         </div>
@@ -463,6 +463,14 @@ const year = new Date().getFullYear();
 
   .home-page a {
     color: inherit;
+  }
+
+  .home-page a.button-on-dark,
+  .home-page a.button-on-dark:visited,
+  .home-page a.button-on-dark:hover,
+  .home-page a.button-on-dark:focus-visible {
+    color: #fffaf2 !important;
+    -webkit-text-fill-color: #fffaf2;
   }
 
   .site-shell {
