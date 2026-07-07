@@ -1,0 +1,51 @@
+---
+import { AMAZON_DISCLOSURE } from '../data/products';
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <img
+      src="/images/FlakeOff-Logo.svg"
+      alt="Flake Off"
+      class="footer__logo"
+      width="150"
+      height="22"
+      loading="lazy"
+    />
+    <div class="footer__text">
+      <p><strong>Affiliate disclosure.</strong> {AMAZON_DISCLOSURE} The product links on this site are affiliate links. They cost you nothing extra, and every product is available at any pharmacy without them.</p>
+      <p><strong>Medical disclaimer.</strong> This site is education, not medical advice, and it isn't a substitute for a diagnosis. Seborrheic dermatitis can resemble other conditions. If you're unsure what you have, if things get worse, or if this routine doesn't help within a few weeks, see a dermatologist.</p>
+      <p class="footer__meta">
+        &copy; {year} Flake Off &middot; <a href="mailto:CONTACT_EMAIL">Contact</a>
+      </p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: var(--color-ink);
+    color: var(--color-on-ink);
+    padding-block: 3.5rem;
+    margin-top: var(--space-section);
+  }
+  .footer__inner {
+    display: grid;
+    gap: 2rem;
+  }
+  .footer__logo {
+    width: 150px;
+    /* recolor the dark wordmark for the dark footer */
+    filter: invert(92%) sepia(4%) saturate(500%) hue-rotate(315deg);
+  }
+  .footer__text { max-width: var(--measure); }
+  .footer__text p {
+    font-size: var(--text-sm);
+    color: color-mix(in srgb, var(--color-on-ink) 82%, transparent);
+  }
+  .footer__text strong { color: var(--color-on-ink); }
+  .footer__meta { margin-top: 1.5rem; }
+  .footer a { color: var(--color-accent); }
+  .footer a:hover { color: var(--color-on-ink); }
+</style>

@@ -1,0 +1,86 @@
+---
+const faqs = [
+  {
+    q: 'Is ketoconazole harsh?',
+    a: `No. It's one of the gentler, better-tolerated things in the whole category. It's available without a prescription, and its most common side effect is mild dryness, which is all I've ever gotten in years of using it. Calling it harsh is marketing.`,
+  },
+  {
+    q: 'Can I ever stop using the antifungal?',
+    a: `Maybe, in the sense that you may need it so rarely it barely counts. Seb derm waxes and wanes with season, stress, and sleep. Mine mostly sleeps through summer and wakes up in winter, so some months I barely touch the antifungal. What's unrealistic is expecting it gone forever. The underlying susceptibility stays in the background. I think of it as minimum effective maintenance, not a cure.`,
+  },
+  {
+    q: `Can't I just starve the fungus by washing more?`,
+    a: `No, and don't try. I did, and it made things worse. Your skin makes oil continuously, so you can't wash it away for good. Over-washing damages your barrier, which lowers your threshold and can rebound your oil production, making flares more likely. Gentle and consistent beats aggressive.`,
+  },
+  {
+    q: 'Why not just use the fancy wash everyone advertises?',
+    a: `I did use the fancy washes, for years. They rinse off in seconds, and some of the popular ones contain fragrance or oils that either irritate reactive skin or feed the yeast. The wash is the least important part of my routine. The antifungal and the barrier moisturizer are what matter.`,
+  },
+  {
+    q: 'Do I still need to see a dermatologist?',
+    a: `It's a good idea at least once, to confirm it's seb derm and not something that mimics it, and to set your maintenance frequency. This site is me sharing what worked for my confirmed case. It's meant to make you informed, not to replace a diagnosis.`,
+  },
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+---
+
+<section class="panel" id="faq">
+  <div class="container">
+    <div class="prose">
+      <span class="eyebrow">Questions</span>
+      <h2>FAQ</h2>
+      <div class="faqs">
+        {faqs.map((f, i) => (
+          <details class="faq" open={i === 0}>
+            <summary>{f.q}</summary>
+            <p>{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+<style>
+  .faqs { margin-top: 1.5rem; }
+  .faq {
+    border-bottom: 1px solid var(--color-line);
+    padding-block: 1.1rem;
+  }
+  .faq summary {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: var(--text-base);
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+  }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after {
+    content: '+';
+    font-size: 1.4em;
+    font-weight: 400;
+    color: var(--color-pop-deep);
+    flex-shrink: 0;
+    transition: transform 0.2s ease;
+  }
+  .faq[open] summary::after { transform: rotate(45deg); }
+  .faq p {
+    margin: 0.8rem 0 0.2rem;
+    color: var(--color-ink-soft);
+  }
+</style>

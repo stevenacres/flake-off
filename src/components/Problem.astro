@@ -1,0 +1,71 @@
+---
+const symptoms = [
+  'Redness and flakes between the eyebrows, in the creases beside your nose, sometimes the hairline or beard edge',
+  'It comes back in the same spots every time, no matter what you switch',
+  'It calms down after a new product or an exfoliation, then returns days later',
+];
+---
+
+<section class="panel" id="problem">
+  <div class="container problem">
+    <div class="problem__intro">
+      <span class="eyebrow">Sound familiar?</span>
+      <h2>Same spots. Every time.</h2>
+      <p class="verdict">
+        That was me for years. If it's you too, this is almost certainly
+        <strong>seborrheic dermatitis</strong>. Extremely common, not a hygiene
+        problem, and not something you can scrub away. Very controllable once
+        you know what's actually happening.
+      </p>
+    </div>
+
+    <ul class="symptoms">
+      {symptoms.map((s) => (
+        <li>
+          <svg class="symptoms__check" viewBox="0 0 24 24" aria-hidden="true" width="22" height="22">
+            <circle cx="12" cy="12" r="11" fill="var(--color-accent)" />
+            <path d="M7 12.5 L10.5 16 L17 8.5" fill="none" stroke="var(--color-ink)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          <span>{s}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .problem {
+    display: grid;
+    gap: 2.5rem;
+    align-items: center;
+  }
+  .verdict { font-size: var(--text-lg); margin-bottom: 0; }
+
+  .symptoms {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0.9rem;
+  }
+  .symptoms li {
+    display: flex;
+    gap: 0.8rem;
+    align-items: flex-start;
+    background: var(--color-surface);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius);
+    padding: 1rem 1.25rem;
+  }
+  .symptoms__check {
+    flex-shrink: 0;
+    margin-top: 0.2em;
+  }
+
+  @media (min-width: 860px) {
+    .problem {
+      grid-template-columns: 1.1fr 1fr;
+      gap: 4rem;
+    }
+  }
+</style>

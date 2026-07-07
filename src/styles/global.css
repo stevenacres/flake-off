@@ -1,0 +1,227 @@
+@import './tokens.css';
+
+/* --- Fonts (self-hosted, woff2 only) --- */
+@font-face {
+  font-family: 'Plus Jakarta Sans';
+  src: url('/fonts/PlusJakartaSans-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Plus Jakarta Sans';
+  src: url('/fonts/PlusJakartaSans-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Plus Jakarta Sans';
+  src: url('/fonts/PlusJakartaSans-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Plus Jakarta Sans';
+  src: url('/fonts/PlusJakartaSans-ExtraBold.woff2') format('woff2');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('/fonts/GeistMono-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('/fonts/GeistMono-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* --- Reset & base --- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 7rem; /* keep anchors clear of sticky header */
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+img, svg { max-width: 100%; height: auto; display: block; }
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.15;
+  margin: 0 0 0.6em;
+  letter-spacing: -0.015em;
+}
+
+h1 { font-size: var(--text-hero); font-weight: 800; }
+h2 { font-size: var(--text-2xl); }
+h3 { font-size: var(--text-xl); }
+
+p { margin: 0 0 1.1em; }
+
+a {
+  color: var(--color-pop-deep);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+a:hover { color: var(--color-pop); }
+
+em { font-style: italic; }
+strong { font-weight: 700; }
+
+/* --- Layout helpers --- */
+.container {
+  width: min(var(--measure-wide), 100% - 2.5rem);
+  margin-inline: auto;
+}
+
+.prose {
+  max-width: var(--measure);
+}
+
+.section {
+  padding-block: var(--space-section);
+}
+
+.section--band {
+  background: var(--color-accent-wash);
+}
+
+/* --- Paginated panels --- */
+/* Each major section is a full-height panel. On desktop, gentle scroll-snap
+   settles the viewport onto the nearest panel. Free scrolling still works,
+   and panels taller than the screen scroll normally. */
+.panel {
+  min-height: 100svh;
+  display: grid;
+  align-items: center;
+  padding-block: 7rem 3rem; /* clears sticky header */
+}
+
+@media (min-width: 860px) and (prefers-reduced-motion: no-preference) {
+  html { scroll-snap-type: y proximity; }
+  .panel { scroll-snap-align: start; }
+}
+
+/* --- "Read more" expander for collapsed long-form copy --- */
+.more {
+  max-width: var(--measure);
+  margin-top: 1.25rem;
+}
+.more > summary {
+  cursor: pointer;
+  list-style: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--text-sm);
+  color: var(--color-pop-deep);
+}
+.more > summary::-webkit-details-marker { display: none; }
+.more > summary::after {
+  content: '↓';
+  transition: transform 0.2s ease;
+}
+.more[open] > summary::after { transform: rotate(180deg); }
+.more > summary:hover { color: var(--color-pop); }
+.more > .more__body {
+  margin-top: 1rem;
+  padding-left: 1.25rem;
+  border-left: 3px solid var(--color-accent);
+  color: var(--color-ink-soft);
+}
+.more > .more__body p:last-child { margin-bottom: 0; }
+
+.eyebrow {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-pop-deep);
+  margin-bottom: 0.9rem;
+}
+
+/* --- Buttons --- */
+.btn {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: var(--text-base);
+  line-height: 1;
+  padding: 1rem 1.75rem;
+  border-radius: 999px;
+  text-decoration: none;
+  transition: transform 0.15s ease, background-color 0.15s ease, color 0.15s ease;
+}
+.btn:active { transform: scale(0.98); }
+
+.btn--primary {
+  background: var(--color-ink);
+  color: var(--color-on-ink);
+}
+.btn--primary:hover {
+  background: var(--color-pop);
+  color: var(--color-on-pop);
+}
+
+.btn--buy {
+  background: var(--color-pop);
+  color: var(--color-on-pop);
+}
+.btn--buy:hover {
+  background: var(--color-pop-deep);
+  color: var(--color-on-pop);
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--color-ink);
+  box-shadow: inset 0 0 0 2px var(--color-ink);
+}
+.btn--ghost:hover {
+  background: var(--color-ink);
+  color: var(--color-on-ink);
+}
+
+/* --- Accessibility --- */
+:focus-visible {
+  outline: 3px solid var(--color-pop);
+  outline-offset: 2px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}

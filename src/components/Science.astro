@@ -1,0 +1,186 @@
+---
+// Tick angles for the dial faces
+const ticks = [-90, -45, 0, 45, 90];
+---
+
+<section class="panel section--band" id="science">
+  <div class="container science">
+    <div class="prose">
+      <span class="eyebrow">The science</span>
+      <h2>A normal yeast eats your oil. Your skin overreacts to the leftovers.</h2>
+      <p class="summary">
+        Everyone's skin hosts a yeast called <em>Malassezia</em>. It feeds on
+        your skin's oil and leaves byproducts behind. Some people's skin
+        overreacts to those leftovers. Mine does. That susceptibility is seb
+        derm, and once I understood it, the fix became obvious. There are
+        exactly two levers.
+      </p>
+    </div>
+
+    <div class="dial-cards">
+      <!-- Lever 1: lower the trigger -->
+      <article class="dial-card">
+        <svg viewBox="0 0 320 165" role="img" aria-label="Gauge turned down toward low">
+          <g transform="translate(160, 130)">
+            <path class="dial-track" d="M -100 0 A 100 100 0 0 1 100 0" />
+            <path class="dial-fill dial-fill--down" d="M -100 0 A 100 100 0 0 1 -70.7 -70.7" />
+            {ticks.map((a) => (
+              <line
+                class="dial-tick"
+                x1={Math.sin((a * Math.PI) / 180) * 86}
+                y1={-Math.cos((a * Math.PI) / 180) * 86}
+                x2={Math.sin((a * Math.PI) / 180) * 100}
+                y2={-Math.cos((a * Math.PI) / 180) * 100}
+              />
+            ))}
+            <line class="dial-needle" x1="0" y1="0" x2="-49.5" y2="-49.5" />
+            <circle class="dial-hub" cx="0" cy="0" r="10" />
+            <text class="dial-minmax" x="-100" y="24">low</text>
+            <text class="dial-minmax" x="100" y="24" text-anchor="end">high</text>
+          </g>
+        </svg>
+        <span class="dial-card__tag">The trigger</span>
+        <h3>Lower the trigger.</h3>
+        <p>
+          Knock the yeast down periodically with a gentle antifungal. Fewer
+          byproducts, less to react to. This is the piece I was missing for
+          years.
+        </p>
+      </article>
+
+      <!-- Lever 2: raise the threshold -->
+      <article class="dial-card">
+        <svg viewBox="0 0 320 165" role="img" aria-label="Gauge turned up toward high">
+          <g transform="translate(160, 130)">
+            <path class="dial-track" d="M -100 0 A 100 100 0 0 1 100 0" />
+            <path class="dial-fill dial-fill--up" d="M -100 0 A 100 100 0 0 1 70.7 -70.7" />
+            {ticks.map((a) => (
+              <line
+                class="dial-tick"
+                x1={Math.sin((a * Math.PI) / 180) * 86}
+                y1={-Math.cos((a * Math.PI) / 180) * 86}
+                x2={Math.sin((a * Math.PI) / 180) * 100}
+                y2={-Math.cos((a * Math.PI) / 180) * 100}
+              />
+            ))}
+            <line class="dial-needle" x1="0" y1="0" x2="49.5" y2="-49.5" />
+            <circle class="dial-hub" cx="0" cy="0" r="10" />
+            <text class="dial-minmax" x="-100" y="24">low</text>
+            <text class="dial-minmax" x="100" y="24" text-anchor="end">high</text>
+          </g>
+        </svg>
+        <span class="dial-card__tag">Your threshold</span>
+        <h3>Raise your threshold.</h3>
+        <p>
+          Strengthen the skin barrier so it takes more provocation to flare.
+          That's what a good moisturizer does.
+        </p>
+      </article>
+    </div>
+
+    <details class="more">
+      <summary>The full explanation</summary>
+      <div class="more__body">
+        <p>
+          <em>Malassezia</em> is normal flora. It favors oily areas, feeds on
+          the oil (sebum) your skin produces, and you cannot get rid of it. You
+          wouldn't want to. It's supposed to be there.
+        </p>
+        <p>
+          Seb derm is not an infection, and the amount of yeast isn't really
+          the issue. Plenty of people carry the same yeast and never flake. The
+          difference is you. Seb derm is a susceptibility. Some people's skin
+          over-reacts to the byproducts the yeast leaves behind when it breaks
+          down your skin's oil, especially certain free fatty acids like oleic
+          acid. In susceptible people, those leftovers trigger inflammation,
+          redness, and flaking.
+        </p>
+        <p>
+          It isn't a classic allergy either. It's closer to an over-reactive
+          inflammatory response, and three things tend to stack up in people
+          who get it: a more reactive immune response to the yeast, a slightly
+          more permeable skin barrier that lets irritants in, and active oil
+          glands that keep the yeast well fed. That's why it hits the oily
+          zones specifically, and why it flares with stress, poor sleep,
+          illness, and cold dry weather.
+        </p>
+        <p>
+          Neither lever is a cure, because your skin keeps making oil and the
+          yeast keeps coming back. But together they keep the condition quiet
+          with very little effort. Mine has stayed quiet for years this way.
+        </p>
+      </div>
+    </details>
+  </div>
+</section>
+
+<style>
+  .science { padding-block: 1rem; }
+  .summary {
+    font-size: var(--text-lg);
+    color: var(--color-ink-soft);
+  }
+
+  .dial-cards {
+    display: grid;
+    gap: 1.5rem;
+    margin-block: 2rem;
+  }
+  .dial-card {
+    background: var(--color-surface);
+    border-radius: var(--radius-lg);
+    padding: 2rem 1.75rem 1.75rem;
+    box-shadow: var(--shadow-soft);
+  }
+  .dial-card svg {
+    max-width: 260px;
+    margin: 0 auto 1.25rem;
+  }
+  .dial-card__tag {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-pop-deep);
+    margin-bottom: 0.4rem;
+  }
+  .dial-card h3 {
+    font-size: var(--text-lg);
+    margin-bottom: 0.35em;
+  }
+  .dial-card p {
+    margin-bottom: 0;
+    color: var(--color-ink-soft);
+  }
+
+  .dial-track {
+    fill: none;
+    stroke: var(--color-line);
+    stroke-width: 14;
+    stroke-linecap: round;
+  }
+  .dial-fill {
+    fill: none;
+    stroke-width: 14;
+    stroke-linecap: round;
+  }
+  .dial-fill--down { stroke: var(--color-accent); }
+  .dial-fill--up { stroke: var(--color-pop); }
+  .dial-tick { stroke: var(--color-ink-soft); stroke-width: 2; opacity: 0.4; }
+  .dial-needle {
+    stroke: var(--color-ink);
+    stroke-width: 6;
+    stroke-linecap: round;
+  }
+  .dial-hub { fill: var(--color-ink); }
+  .dial-minmax {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    fill: var(--color-ink-soft);
+  }
+
+  @media (min-width: 760px) {
+    .dial-cards { grid-template-columns: 1fr 1fr; }
+  }
+</style>

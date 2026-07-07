@@ -1,0 +1,48 @@
+/* ==========================================================================
+   Flake Off — Design tokens
+   Single source of truth. Change values here, everything inherits.
+   ========================================================================== */
+
+:root {
+  /* --- Brand palette (from Steven) --- */
+  --color-bg: #ffeceb;         /* White / Light — page background */
+  --color-ink: #384948;        /* Black / Brand — text, primary buttons */
+  --color-accent: #a6ccc8;     /* Brand Light — sage accent */
+
+  /* --- Derived / supporting (Claude's fill-ins) --- */
+  --color-surface: #fff7f6;    /* cards, slightly lifted off the bg */
+  --color-ink-soft: #5c6d6c;   /* secondary text, captions */
+  --color-accent-deep: #7fa8a3;/* accent hover / borders */
+  --color-accent-wash: #dcebe9;/* soft sage tint for section bands */
+  --color-line: #e8d5d3;       /* hairline borders on blush */
+
+  /* --- Pop color (buttons, links, highlights) --- */
+  --color-pop: #c05b3d;        /* warm terracotta, sits well on blush */
+  --color-pop-deep: #9e4326;   /* darker: text links, hover, AA on blush */
+
+  /* --- On-color text --- */
+  --color-on-ink: #ffeceb;     /* light text on dark teal */
+  --color-on-pop: #fff7f6;     /* light text on terracotta */
+
+  /* --- Type --- */
+  --font-display: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-body: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-mono: 'Geist Mono', ui-monospace, 'SF Mono', monospace;
+
+  /* Fluid type scale (mobile-first) */
+  --text-xs: 0.8rem;
+  --text-sm: 0.9rem;
+  --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+  --text-lg: clamp(1.15rem, 1.05rem + 0.5vw, 1.35rem);
+  --text-xl: clamp(1.4rem, 1.2rem + 1vw, 1.85rem);
+  --text-2xl: clamp(1.8rem, 1.4rem + 2vw, 2.75rem);
+  --text-hero: clamp(2.2rem, 1.6rem + 3.2vw, 4rem);
+
+  /* --- Spacing & layout --- */
+  --space-section: clamp(4rem, 3rem + 5vw, 8rem);
+  --measure: 42rem;            /* comfortable reading width */
+  --measure-wide: 68rem;       /* section container */
+  --radius: 14px;
+  --radius-lg: 24px;
+  --shadow-soft: 0 10px 30px -12px rgba(56, 73, 72, 0.25);
+}

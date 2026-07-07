@@ -1,0 +1,113 @@
+---
+const items = [
+  {
+    title: 'Expensive "gentle" washes',
+    verdict: 'On your face for seconds, then down the drain. Fragrance and botanical oils can make it worse.',
+    body: `I owned more than one of these. A cleanser only touches your face for a few seconds before it rinses off, so an expensive wash can't do much that a cheap gentle one can't. Worse, some premium washes are loaded with fragrance and essential oils, which are common irritants for reactive skin. And some skincare oils are made of the exact fatty acids the yeast feeds on, so a product marketed as nourishing can quietly make things worse.`,
+  },
+  {
+    title: 'Heavily marketed creams',
+    verdict: 'Some literally feed the yeast. "Fungal-acne safe" is what matters, not the branding.',
+    body: `Some popular moisturizers contain oils and fatty-acid esters that feed Malassezia. A barrier cream is a good idea in principle, but the formula matters, and "fungal-acne safe" (meaning it skips the fatty acids the yeast eats) is the thing to look for, not the price or the branding.`,
+  },
+  {
+    title: 'The missing piece: a cheap antifungal',
+    verdict: 'The actual fix costs about twelve dollars. Nobody markets it because there’s no margin in it.',
+    body: `The single most effective everyday tool for seb derm is an over-the-counter antifungal. Nobody advertised it to me, so it took me years to find it. Most people never learn that the actual fix is generic and boring. That's why I built this site.`,
+  },
+  {
+    title: 'Over-reliance on steroids',
+    verdict: 'A real short-term tool, a bad long-term plan. And they don’t address the yeast at all.',
+    body: `Topical steroids do calm a flare fast, and used briefly they're fine. The trouble is using them as an everyday crutch. On facial skin, long-term steroid use can thin the skin, create persistent redness, and cause rebound flares when you stop. A good dermatologist uses them short-term for a bad flare, not as maintenance.`,
+  },
+];
+---
+
+<section class="panel" id="why-it-fails">
+  <div class="container">
+    <div class="prose">
+      <span class="eyebrow">The market problem</span>
+      <h2>Why the popular stuff fails</h2>
+      <p>
+        Dermatologists are not the enemy. The problem is what got
+        <em>marketed</em> to me versus what actually addressed the mechanism.
+      </p>
+    </div>
+
+    <div class="fails">
+      {items.map((item) => (
+        <details class="fail">
+          <summary>
+            <span class="fail__head">
+              <span class="fail__title">{item.title}</span>
+              <span class="fail__verdict">{item.verdict}</span>
+            </span>
+            <span class="fail__toggle" aria-hidden="true">+</span>
+          </summary>
+          <p class="fail__body">{item.body}</p>
+        </details>
+      ))}
+    </div>
+
+    <p class="pattern prose">
+      The pattern I kept running into is the same every time: the effective
+      move is unglamorous and cheap, so attention gets routed toward things
+      that are expensive, exciting, or profitable instead.
+    </p>
+  </div>
+</section>
+
+<style>
+  .fails {
+    display: grid;
+    gap: 1rem;
+    margin-block: 2rem;
+  }
+  .fail {
+    background: var(--color-surface);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius);
+    padding: 1.25rem 1.5rem;
+  }
+  .fail summary {
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .fail summary::-webkit-details-marker { display: none; }
+  .fail__head { display: block; }
+  .fail__title {
+    display: block;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: var(--text-base);
+  }
+  .fail__verdict {
+    display: block;
+    color: var(--color-ink-soft);
+    font-size: var(--text-sm);
+    margin-top: 0.2rem;
+  }
+  .fail__toggle {
+    font-size: 1.5rem;
+    color: var(--color-pop-deep);
+    flex-shrink: 0;
+    transition: transform 0.2s ease;
+  }
+  .fail[open] .fail__toggle { transform: rotate(45deg); }
+  .fail__body {
+    margin: 1rem 0 0.25rem;
+    color: var(--color-ink-soft);
+    font-size: var(--text-sm);
+    border-top: 1px solid var(--color-line);
+    padding-top: 1rem;
+  }
+  .pattern { color: var(--color-ink-soft); }
+
+  @media (min-width: 760px) {
+    .fails { grid-template-columns: 1fr 1fr; align-items: start; }
+  }
+</style>

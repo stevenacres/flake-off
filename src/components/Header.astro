@@ -1,0 +1,63 @@
+---
+const links = [
+  { href: '#problem', label: 'The problem' },
+  { href: '#science', label: 'The science' },
+  { href: '#why-it-fails', label: 'Why the hype fails' },
+  { href: '#regimen', label: 'The routine', featured: true },
+  { href: '#faq', label: 'FAQ' },
+];
+---
+
+<header class="header">
+  <div class="container header__inner">
+    <a href="#top" class="header__logo" aria-label="Flake Off, back to top">
+      <img src="/images/FlakeOff-Logo.svg" alt="Flake Off" width="161" height="24" />
+    </a>
+    <nav class="header__nav" aria-label="Sections">
+      {links.map((l) => (
+        <a href={l.href} class={l.featured ? 'is-featured' : ''}>{l.label}</a>
+      ))}
+    </nav>
+  </div>
+</header>
+
+<style>
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: color-mix(in srgb, var(--color-bg) 88%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--color-line);
+  }
+  .header__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.9rem;
+    padding-block: 0.85rem 0.75rem;
+  }
+  .header__logo img { width: 161px; height: auto; }
+  .header__nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.4rem 1.4rem;
+  }
+  .header__nav a {
+    color: var(--color-ink);
+    text-decoration: none;
+    font-size: var(--text-sm);
+    font-weight: 500;
+    padding-bottom: 2px;
+    border-bottom: 3px solid transparent;
+  }
+  .header__nav a:hover { color: var(--color-pop-deep); }
+  .header__nav a.is-featured {
+    border-bottom-color: var(--color-accent);
+    font-weight: 700;
+  }
+  .header__nav a.is-featured:hover {
+    border-bottom-color: var(--color-pop);
+  }
+</style>
