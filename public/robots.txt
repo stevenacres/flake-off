@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://flake-off.pages.dev/sitemap.xml

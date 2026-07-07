@@ -1,5 +1,1251 @@
 ---
-import TestPage from './test.astro';
+import '../styles/global.css';
+import { products, AMAZON_DISCLOSURE } from '../data/products';
+
+const title = 'Flake Off - Seborrheic dermatitis, solved for about forty bucks';
+const description =
+  'A clear, affordable seborrheic dermatitis routine using ketoconazole, a gentle cleanser, and barrier repair. No prescriptions, no hype.';
+const siteUrl = 'https://flake-off.pages.dev';
+const canonicalUrl = `${siteUrl}/`;
+const socialImage = `${siteUrl}/images/FlakeOff-Nizoral.webp`;
+const keywords =
+  'seborrheic dermatitis, seb derm, face flakes, ketoconazole, Nizoral, Vanicream cleanser, Vanicream moisturizer, fungal acne safe skincare';
+
+const nav = [
+  { href: '#problem', label: 'Pattern' },
+  { href: '#science', label: 'Mechanism' },
+  { href: '#market', label: 'Market' },
+  { href: '#regimen', label: 'Routine' },
+  { href: '#faq', label: 'FAQ' },
+];
+
+const symptoms = [
+  'Redness and flakes between the eyebrows, in the creases beside your nose, sometimes the hairline or beard edge',
+  'It comes back in the same spots every time, no matter what you switch',
+  'It calms down after a new product or an exfoliation, then returns days later',
+];
+
+const levers = [
+  {
+    eyebrow: 'Lower the trigger',
+    title: 'Knock the yeast down periodically.',
+    body: 'Fewer byproducts means less for your skin to overreact to. This is the boring piece I was missing for years.',
+  },
+  {
+    eyebrow: 'Raise your threshold',
+    title: 'Rebuild the barrier every day.',
+    body: 'A stronger barrier takes more provocation to flare. The moisturizer is not decoration; it is the long game.',
+  },
+];
+
+const marketItems = [
+  {
+    title: 'Expensive "gentle" washes',
+    verdict: 'On your face for seconds, then down the drain. Fragrance and botanical oils can make it worse.',
+    body: `I owned more than one of these. A cleanser only touches your face for a few seconds before it rinses off, so an expensive wash cannot do much that a cheap gentle one cannot. Worse, some premium washes are loaded with fragrance and essential oils, which are common irritants for reactive skin.`,
+  },
+  {
+    title: 'Heavily marketed creams',
+    verdict: 'Some literally feed the yeast. "Fungal-acne safe" is what matters, not the branding.',
+    body: `Some popular moisturizers contain oils and fatty-acid esters that feed Malassezia. A barrier cream is a good idea in principle, but the formula matters, and "fungal-acne safe" is the thing to look for, not the price or branding.`,
+  },
+  {
+    title: 'The missing piece',
+    verdict: 'The actual fix costs about twelve dollars. Nobody markets it because there is no margin in it.',
+    body: `The single most effective everyday tool for seb derm is an over-the-counter antifungal. Nobody advertised it to me, so it took me years to find it. Most people never learn that the actual fix is generic and boring.`,
+  },
+  {
+    title: 'Over-reliance on steroids',
+    verdict: 'A real short-term tool, a bad long-term plan. And they do not address the yeast at all.',
+    body: `Topical steroids do calm a flare fast, and used briefly they are fine. The trouble is using them as an everyday crutch. On facial skin, long-term steroid use can thin the skin, create persistent redness, and cause rebound flares when you stop.`,
+  },
+];
+
+const usage = [
+  {
+    frequency: '1 night a week',
+    summary: 'Use as a short-contact face treatment instead of your normal cleanse. Not every day.',
+    steps: [
+      'Wet your face with lukewarm water.',
+      'Work a small amount into a light lather over the affected areas.',
+      'Leave it on for three to five minutes. The contact time is what lets it work.',
+      'Rinse well, pat dry, and moisturize.',
+    ],
+    note: `Gentle, well-tolerated, and safe long-term at this rhythm. I have used it for years. It is not "harsh," despite what some marketing implies.`,
+  },
+  {
+    frequency: 'Nightly',
+    summary: 'Once a day, ideally at night, lukewarm water. Mornings, a plain water rinse is enough.',
+    steps: null,
+    note: 'On antifungal nights it gets replaced, not stacked. It only needs to clean without irritating. It does not need to be expensive.',
+  },
+  {
+    frequency: 'Morning + night',
+    summary: 'After cleansing, every time. Add sunscreen in the morning if you will be outside.',
+    steps: null,
+    note: 'Ceramides are the exact lipids a seb-derm barrier is short on, and a moisturizer stays on for hours, so it has time to do real repair.',
+  },
+];
+
+const week = [
+  { when: 'Most nights', what: 'gentle cleanse, then moisturizer' },
+  { when: '1 night a week', what: 'antifungal for 3-5 minutes, then moisturizer' },
+  { when: 'Every morning', what: 'water rinse, moisturizer, sunscreen if needed' },
+];
+
+const faqs = [
+  {
+    q: 'Is ketoconazole harsh?',
+    a: `No. It is one of the gentler, better-tolerated things in the whole category. It is available without a prescription, and its most common side effect is mild dryness, which is all I have ever gotten in years of using it.`,
+  },
+  {
+    q: 'Can I ever stop using the antifungal?',
+    a: `Maybe, in the sense that you may need it so rarely it barely counts. Seb derm waxes and wanes with season, stress, and sleep. What is unrealistic is expecting it gone forever. I think of it as minimum effective maintenance, not a cure.`,
+  },
+  {
+    q: `Can't I just starve the fungus by washing more?`,
+    a: `No, and do not try. I did, and it made things worse. Your skin makes oil continuously, so you cannot wash it away for good. Over-washing damages your barrier, which lowers your threshold and can rebound your oil production.`,
+  },
+  {
+    q: 'Why not just use the fancy wash everyone advertises?',
+    a: `I did use the fancy washes, for years. They rinse off in seconds, and some of the popular ones contain fragrance or oils that either irritate reactive skin or feed the yeast. The antifungal and barrier moisturizer are what matter.`,
+  },
+  {
+    q: 'Do I still need to see a dermatologist?',
+    a: `It is a good idea at least once, to confirm it is seb derm and not something that mimics it, and to set your maintenance frequency. This site is me sharing what worked for my confirmed case.`,
+  },
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Flake Off',
+  url: canonicalUrl,
+  description,
+};
+
+const webPageSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'MedicalWebPage',
+  name: title,
+  url: canonicalUrl,
+  description,
+  about: [
+    'Seborrheic dermatitis',
+    'Ketoconazole',
+    'Skin barrier repair',
+  ],
+  audience: {
+    '@type': 'Audience',
+    audienceType: 'People researching seborrheic dermatitis routines',
+  },
+  isAccessibleForFree: true,
+  publisher: {
+    '@type': 'Organization',
+    name: 'Flake Off',
+    url: canonicalUrl,
+  },
+};
+
+const year = new Date().getFullYear();
 ---
 
-<TestPage />
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="keywords" content={keywords} />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="theme-color" content="#182825" />
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preload" href="/fonts/PlusJakartaSans-ExtraBold.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/PlusJakartaSans-Regular.woff2" as="font" type="font/woff2" crossorigin />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:site_name" content="Flake Off" />
+    <meta property="og:image" content={socialImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImage} />
+  </head>
+  <body class="home-page">
+    <header class="site-shell" aria-label="Site header">
+      <a href="/" class="brand" aria-label="Flake Off home">
+        <img src="/images/FlakeOff-Logo.svg" alt="Flake Off" width="161" height="24" />
+      </a>
+      <nav class="nav" aria-label="Page sections">
+        {nav.map((item) => <a href={item.href}>{item.label}</a>)}
+      </nav>
+      <a href="#regimen" class="nav-cta">The routine</a>
+    </header>
+
+    <main>
+      <section class="hero" id="top">
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <p class="kicker">Seb derm, stripped of the noise</p>
+            <h1>Quiet skin starts with the right three boring products.</h1>
+            <p class="hero-deck">
+              My face kept flaking. The redness kept coming back. After years of
+              expensive washes and creams that did not work, the fix was a
+              weekly antifungal, a gentle cleanser, and barrier repair.
+            </p>
+            <div class="hero-actions">
+              <a href="#regimen" class="button button-primary">See the routine</a>
+              <a href="#science" class="button button-secondary">Read the mechanism</a>
+            </div>
+            <p class="microcopy">
+              No signup. Affiliate links are disclosed clearly. Every product is
+              available without buying through this site.
+            </p>
+          </div>
+
+          <div class="hero-visual" aria-label="The three-product routine">
+            <div class="product-stage">
+              {products.map((p, i) => (
+                <figure class={`hero-product hero-product-${i + 1}`}>
+                  <img src={p.image} alt={p.imageAlt} width="420" height="630" loading={i === 0 ? 'eager' : 'lazy'} />
+                  <figcaption>{p.role}</figcaption>
+                </figure>
+              ))}
+            </div>
+            <div class="hero-note">
+              <span>about $40</span>
+              <span>3 products</span>
+              <span>no prescription</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-problem" id="problem">
+        <div class="section-head">
+          <p class="kicker">The pattern</p>
+          <h2>Same spots. Every time.</h2>
+          <p>
+            That was me for years. If it is you too, this is almost certainly
+            <strong>seborrheic dermatitis</strong>: common, stubborn, not a
+            hygiene problem, and very controllable once you know the mechanism.
+          </p>
+        </div>
+        <div class="symptom-grid">
+          {symptoms.map((symptom, i) => (
+            <article class="symptom-card">
+              <span class="number">0{i + 1}</span>
+              <p>{symptom}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section class="section section-science" id="science">
+        <div class="split">
+          <div class="section-head sticky-copy">
+            <p class="kicker">The mechanism</p>
+            <h2>A normal yeast eats your oil. Your skin overreacts to the leftovers.</h2>
+            <p>
+              Everyone's skin hosts a yeast called <em>Malassezia</em>. It feeds
+              on your skin's oil and leaves byproducts behind. Some people's
+              skin overreacts to those leftovers. Mine does.
+            </p>
+          </div>
+          <div class="lever-stack">
+            {levers.map((lever) => (
+              <article class="lever-card">
+                <span>{lever.eyebrow}</span>
+                <h3>{lever.title}</h3>
+                <p>{lever.body}</p>
+              </article>
+            ))}
+            <details class="explain-card">
+              <summary>The full explanation</summary>
+              <div>
+                <p>
+                  <em>Malassezia</em> is normal flora. It favors oily areas,
+                  feeds on the oil your skin produces, and you cannot get rid of
+                  it. You would not want to. It is supposed to be there.
+                </p>
+                <p>
+                  Seb derm is not an infection, and the amount of yeast is not
+                  really the issue. The difference is susceptibility: some
+                  people's skin overreacts to the byproducts the yeast leaves
+                  behind when it breaks down your skin's oil.
+                </p>
+                <p>
+                  Neither lever is a cure, because your skin keeps making oil
+                  and the yeast keeps coming back. But together they keep the
+                  condition quiet with very little effort.
+                </p>
+              </div>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-market" id="market">
+        <div class="section-head centered">
+          <p class="kicker">The market problem</p>
+          <h2>The effective move is unglamorous, so the attention goes elsewhere.</h2>
+          <p>
+            Dermatologists are not the enemy. The problem is what got marketed
+            to me versus what actually addressed the mechanism.
+          </p>
+        </div>
+        <div class="market-grid">
+          {marketItems.map((item) => (
+            <details class="market-card">
+              <summary>
+                <span>
+                  <strong>{item.title}</strong>
+                  <em>{item.verdict}</em>
+                </span>
+              </summary>
+              <p>{item.body}</p>
+            </details>
+          ))}
+        </div>
+      </section>
+
+      <section class="section section-regimen" id="regimen">
+        <div class="section-head centered">
+          <p class="kicker">The routine</p>
+          <h2>Three products. About forty dollars.</h2>
+          <p>This is exactly what I use, and exactly how I use it.</p>
+          <small>{AMAZON_DISCLOSURE}</small>
+        </div>
+
+        <div class="routine-panel">
+          {products.map((p, i) => (
+            <article class="routine-product">
+              <div class="routine-image">
+                <img src={p.image} alt={p.imageAlt} width="260" loading="lazy" />
+              </div>
+              <span>{p.role} / {usage[i].frequency}</span>
+              <h3>{p.name}</h3>
+              <p>{p.blurb}</p>
+              <strong>{p.price}</strong>
+              <a href={p.link} rel="nofollow sponsored">Get it on Amazon</a>
+            </article>
+          ))}
+        </div>
+
+        <div class="usage-grid">
+          {products.map((p, i) => (
+            <details class="usage-card">
+              <summary>How to use {p.name.split(' (')[0]}</summary>
+              <div>
+                <p>{usage[i].summary}</p>
+                {usage[i].steps && (
+                  <ol>
+                    {usage[i].steps.map((step) => <li>{step}</li>)}
+                  </ol>
+                )}
+                <p class="usage-note">{usage[i].note}</p>
+              </div>
+            </details>
+          ))}
+        </div>
+
+        <div class="week-panel">
+          <div>
+            <p class="kicker">At a glance</p>
+            <h3>My week</h3>
+          </div>
+          <dl>
+            {week.map((item) => (
+              <div>
+                <dt>{item.when}</dt>
+                <dd>{item.what}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </section>
+
+      <section class="section section-faq" id="faq">
+        <div class="split">
+          <div class="section-head sticky-copy">
+            <p class="kicker">Questions</p>
+            <h2>The answers I wish I had first.</h2>
+          </div>
+          <div class="faq-list">
+            {faqs.map((faq, i) => (
+              <details class="faq-card" open={i === 0}>
+                <summary>{faq.q}</summary>
+                <p>{faq.a}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <aside class="disclosure" aria-label="Affiliate and medical disclosure">
+        <div>
+          <p class="kicker">Disclosure</p>
+          <h2>Nothing hidden.</h2>
+        </div>
+        <div class="disclosure-copy">
+          <p>
+            The product links are affiliate links. If you buy through them I may
+            earn a small commission, and it costs you nothing extra. You can
+            also walk into any pharmacy and buy the same three products without
+            me.
+          </p>
+          <p>
+            This is education, not medical advice. Seb derm can look like other
+            conditions, rosacea in particular. If you are not sure what you have,
+            if this does not help within a few weeks, or if things get worse,
+            see a professional.
+          </p>
+        </div>
+      </aside>
+    </main>
+
+    <footer class="site-footer">
+      <img src="/images/FlakeOff-Logo.svg" alt="Flake Off" width="150" height="22" loading="lazy" />
+      <p>© {year} Flake Off. Seb derm, stripped of the noise.</p>
+    </footer>
+
+    <script type="application/ld+json" set:html={JSON.stringify([websiteSchema, webPageSchema, faqSchema])} />
+  </body>
+</html>
+
+<style is:global>
+  .home-page {
+    --test-bg: #f5efe7;
+    --test-cream: #fffaf2;
+    --test-ink: #182825;
+    --test-muted: #66716d;
+    --test-line: rgba(23, 35, 33, 0.13);
+    --test-sage: #8fb8ad;
+    --test-sage-deep: #315d55;
+    --test-clay: #b76f54;
+    --test-gold: #c7a36a;
+    --test-shadow: 0 30px 90px rgba(31, 37, 35, 0.14);
+    --test-radius: 28px;
+    background:
+      radial-gradient(circle at 18% 8%, rgba(143, 184, 173, 0.35), transparent 28rem),
+      radial-gradient(circle at 86% 4%, rgba(199, 163, 106, 0.26), transparent 24rem),
+      linear-gradient(180deg, #faf4eb 0%, var(--test-bg) 45%, #eee5d9 100%);
+    color: var(--test-ink);
+    font-family: var(--font-body);
+  }
+
+  .home-page::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+      linear-gradient(rgba(23, 35, 33, 0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(23, 35, 33, 0.035) 1px, transparent 1px);
+    background-size: 44px 44px;
+    mask-image: linear-gradient(to bottom, black, transparent 72%);
+    z-index: -1;
+  }
+
+  .home-page a {
+    color: inherit;
+  }
+
+  .site-shell {
+    position: sticky;
+    top: 1rem;
+    z-index: 20;
+    width: min(1180px, calc(100% - 2rem));
+    margin: 1rem auto 0;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.58);
+    border-radius: 999px;
+    background: rgba(255, 250, 242, 0.76);
+    box-shadow: 0 18px 54px rgba(23, 35, 33, 0.08);
+    backdrop-filter: blur(22px);
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.35rem 0.75rem;
+    text-decoration: none;
+  }
+
+  .brand img {
+    width: 172px;
+    height: auto;
+  }
+
+  .kicker,
+  .routine-product span,
+  .hero-note span,
+  .number {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .nav {
+    display: flex;
+    justify-content: center;
+    gap: clamp(0.5rem, 1.4vw, 1.4rem);
+  }
+
+  .nav a,
+  .nav-cta {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: background 200ms ease, color 200ms ease, transform 200ms ease;
+  }
+
+  .nav a {
+    padding-inline: 0.35rem;
+    color: var(--test-muted);
+  }
+
+  .nav a:hover {
+    color: var(--test-ink);
+  }
+
+  .home-page .nav-cta {
+    padding-inline: 1.25rem;
+    background: var(--test-ink);
+    color: var(--test-cream);
+  }
+
+  .home-page .nav-cta:hover {
+    transform: translateY(-1px);
+    background: var(--test-sage-deep);
+    color: var(--test-cream);
+  }
+
+  .home-page .nav-cta:visited {
+    color: var(--test-cream);
+  }
+
+  .hero,
+  .section,
+  .disclosure,
+  .site-footer {
+    width: min(1180px, calc(100% - 2rem));
+    margin-inline: auto;
+  }
+
+  .hero {
+    min-height: calc(100svh - 7rem);
+    display: grid;
+    align-items: center;
+    padding-block: clamp(4rem, 7vw, 8rem);
+  }
+
+  .hero-grid {
+    display: grid;
+    gap: clamp(2rem, 5vw, 5rem);
+    align-items: center;
+  }
+
+  .hero-copy {
+    max-width: 47rem;
+  }
+
+  .kicker {
+    margin: 0 0 1rem;
+    color: var(--test-sage-deep);
+    font-size: 0.78rem;
+    font-weight: 700;
+  }
+
+  .hero h1,
+  .section h2 {
+    margin: 0;
+    color: var(--test-ink);
+    font-weight: 800;
+    letter-spacing: -0.06em;
+    text-wrap: balance;
+  }
+
+  .hero h1 {
+    font-size: clamp(3.2rem, 8.2vw, 7.4rem);
+    line-height: 0.88;
+  }
+
+  .section h2 {
+    font-size: clamp(2.35rem, 5.4vw, 5.3rem);
+    line-height: 0.92;
+  }
+
+  .hero-deck,
+  .section-head > p,
+  .disclosure-copy p {
+    color: var(--test-muted);
+    font-size: clamp(1.05rem, 1.3vw, 1.28rem);
+    line-height: 1.72;
+    text-wrap: pretty;
+  }
+
+  .hero-deck {
+    max-width: 38rem;
+    margin-top: 1.6rem;
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.85rem;
+    margin-top: 2rem;
+  }
+
+  .button {
+    min-height: 52px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.95rem 1.35rem;
+    border-radius: 999px;
+    text-decoration: none;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    font-weight: 700;
+    transition: transform 200ms ease, box-shadow 200ms ease, background 200ms ease;
+  }
+
+  .button:hover {
+    transform: translateY(-2px);
+  }
+
+  .home-page .button-primary {
+    background: var(--test-ink);
+    color: var(--test-cream);
+    box-shadow: 0 18px 40px rgba(23, 35, 33, 0.18);
+  }
+
+  .home-page .button-primary:hover,
+  .home-page .button-primary:visited {
+    color: var(--test-cream);
+  }
+
+  .home-page .button-secondary {
+    border: 1px solid var(--test-line);
+    background: rgba(255, 250, 242, 0.64);
+    color: var(--test-ink);
+  }
+
+  .home-page .button-secondary:hover,
+  .home-page .button-secondary:visited {
+    color: var(--test-ink);
+  }
+
+  .microcopy {
+    max-width: 25rem;
+    margin-top: 1rem;
+    color: var(--test-muted);
+    font-size: 0.86rem;
+  }
+
+  .hero-visual {
+    position: relative;
+  }
+
+  .product-stage {
+    position: relative;
+    min-height: clamp(28rem, 54vw, 42rem);
+    border: 1px solid rgba(255, 255, 255, 0.62);
+    border-radius: clamp(2rem, 4vw, 4rem);
+    background:
+      linear-gradient(150deg, rgba(255, 250, 242, 0.92), rgba(240, 229, 215, 0.68)),
+      radial-gradient(circle at 55% 45%, rgba(143, 184, 173, 0.28), transparent 18rem);
+    box-shadow: var(--test-shadow);
+    overflow: hidden;
+  }
+
+  .product-stage::before {
+    content: '';
+    position: absolute;
+    inset: 9%;
+    border: 1px solid rgba(23, 35, 33, 0.08);
+    border-radius: 999px;
+  }
+
+  .product-stage::after {
+    content: '';
+    position: absolute;
+    left: 12%;
+    right: 12%;
+    bottom: 10%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(23, 35, 33, 0.2), transparent);
+  }
+
+  .hero-product {
+    position: absolute;
+    margin: 0;
+    display: grid;
+    justify-items: center;
+    gap: 0.75rem;
+    transition: transform 260ms ease;
+  }
+
+  .hero-product img {
+    width: clamp(8rem, 18vw, 14rem);
+    height: auto;
+    filter: drop-shadow(0 30px 26px rgba(23, 35, 33, 0.18));
+  }
+
+  .hero-product figcaption {
+    padding: 0.4rem 0.7rem;
+    border: 1px solid var(--test-line);
+    border-radius: 999px;
+    background: rgba(255, 250, 242, 0.7);
+    color: var(--test-muted);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .hero-product-1 {
+    left: 9%;
+    bottom: 18%;
+    transform: rotate(-5deg);
+  }
+
+  .hero-product-2 {
+    left: 37%;
+    bottom: 13%;
+    transform: translateY(-8%) scale(1.1);
+    z-index: 2;
+  }
+
+  .hero-product-3 {
+    right: 1%;
+    bottom: 18%;
+    transform: rotate(4deg);
+  }
+
+  .hero-visual:hover .hero-product-1 {
+    transform: rotate(-7deg) translateY(-8px);
+  }
+
+  .hero-visual:hover .hero-product-2 {
+    transform: translateY(calc(-8% - 12px)) scale(1.1);
+  }
+
+  .hero-visual:hover .hero-product-3 {
+    transform: rotate(6deg) translateY(-8px);
+  }
+
+  .hero-note {
+    position: absolute;
+    left: 50%;
+    bottom: -1.4rem;
+    transform: translateX(-50%);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.35rem;
+    width: min(92%, 34rem);
+    padding: 0.55rem;
+    border: 1px solid rgba(255, 255, 255, 0.58);
+    border-radius: 999px;
+    background: rgba(23, 35, 33, 0.88);
+    color: var(--test-cream);
+    box-shadow: 0 20px 45px rgba(23, 35, 33, 0.18);
+  }
+
+  .hero-note span {
+    padding: 0.55rem 0.75rem;
+    font-size: 0.7rem;
+  }
+
+  .section {
+    padding-block: clamp(5rem, 9vw, 9rem);
+  }
+
+  .section-head {
+    max-width: 50rem;
+  }
+
+  .section-head.centered {
+    margin-inline: auto;
+    text-align: center;
+  }
+
+  .section-head > p {
+    margin: 1.25rem 0 0;
+  }
+
+  .symptom-grid,
+  .market-grid,
+  .usage-grid {
+    display: grid;
+    gap: 1rem;
+    margin-top: 2.5rem;
+  }
+
+  .symptom-card,
+  .lever-card,
+  .market-card,
+  .routine-product,
+  .usage-card,
+  .week-panel,
+  .faq-card,
+  .disclosure {
+    border: 1px solid rgba(255, 255, 255, 0.58);
+    background: rgba(255, 250, 242, 0.76);
+    box-shadow: 0 18px 60px rgba(23, 35, 33, 0.08);
+    backdrop-filter: blur(18px);
+  }
+
+  .symptom-card {
+    min-height: 14rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: var(--test-radius);
+    padding: 1.4rem;
+  }
+
+  .number {
+    color: var(--test-gold);
+    font-size: 0.78rem;
+    font-weight: 700;
+  }
+
+  .symptom-card p {
+    margin: 2rem 0 0;
+    color: var(--test-ink);
+    font-size: clamp(1.1rem, 1.5vw, 1.4rem);
+    line-height: 1.35;
+  }
+
+  .split {
+    display: grid;
+    gap: 2rem;
+  }
+
+  .lever-stack {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .lever-card,
+  .explain-card,
+  .market-card,
+  .usage-card,
+  .faq-card {
+    border-radius: var(--test-radius);
+    padding: 1.35rem;
+  }
+
+  .lever-card span {
+    color: var(--test-clay);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .lever-card h3,
+  .week-panel h3 {
+    margin: 0.6rem 0;
+    font-size: clamp(1.45rem, 2.4vw, 2.2rem);
+    letter-spacing: -0.04em;
+  }
+
+  .lever-card p,
+  .market-card p,
+  .usage-card div,
+  .faq-card p {
+    color: var(--test-muted);
+  }
+
+  .explain-card {
+    border: 1px solid var(--test-line);
+    background: rgba(23, 35, 33, 0.9);
+    color: var(--test-cream);
+  }
+
+  .explain-card summary,
+  .market-card summary,
+  .usage-card summary,
+  .faq-card summary {
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .explain-card summary::-webkit-details-marker,
+  .market-card summary::-webkit-details-marker,
+  .usage-card summary::-webkit-details-marker,
+  .faq-card summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .explain-card summary,
+  .usage-card summary,
+  .faq-card summary {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    font-family: var(--font-display);
+    font-weight: 800;
+  }
+
+  .explain-card summary::after,
+  .usage-card summary::after,
+  .faq-card summary::after,
+  .market-card summary::after {
+    content: '+';
+    flex: 0 0 auto;
+    transition: transform 200ms ease;
+  }
+
+  .explain-card[open] summary::after,
+  .usage-card[open] summary::after,
+  .faq-card[open] summary::after,
+  .market-card[open] summary::after {
+    transform: rotate(45deg);
+  }
+
+  .explain-card div,
+  .usage-card div,
+  .faq-card p {
+    margin-top: 1rem;
+  }
+
+  .market-grid {
+    align-items: start;
+  }
+
+  .market-card summary {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 1rem;
+  }
+
+  .market-card strong {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+  }
+
+  .market-card em {
+    display: block;
+    margin-top: 0.35rem;
+    color: var(--test-muted);
+    font-size: 0.95rem;
+    font-style: normal;
+    line-height: 1.5;
+  }
+
+  .routine-panel {
+    display: grid;
+    margin-top: 2.5rem;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.62);
+    border-radius: clamp(1.6rem, 3vw, 3rem);
+    background: rgba(255, 250, 242, 0.84);
+    box-shadow: var(--test-shadow);
+  }
+
+  .routine-product {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.75rem;
+    border: 0;
+    border-top: 1px solid var(--test-line);
+    border-radius: 0;
+    box-shadow: none;
+    padding: clamp(1.5rem, 3vw, 2.5rem);
+    background: transparent;
+  }
+
+  .routine-product:first-child {
+    border-top: 0;
+  }
+
+  .routine-image {
+    height: 13rem;
+    display: flex;
+    align-items: flex-end;
+  }
+
+  .routine-image img {
+    max-height: 13rem;
+    width: auto;
+    filter: drop-shadow(0 24px 20px rgba(23, 35, 33, 0.12));
+  }
+
+  .routine-product span {
+    color: var(--test-sage-deep);
+    font-size: 0.72rem;
+    font-weight: 700;
+  }
+
+  .routine-product h3 {
+    margin: 0;
+    font-size: clamp(1.25rem, 2vw, 1.7rem);
+    letter-spacing: -0.04em;
+  }
+
+  .routine-product p {
+    max-width: 18rem;
+    margin: 0;
+    color: var(--test-muted);
+    font-size: 0.98rem;
+  }
+
+  .routine-product strong {
+    margin-top: auto;
+  }
+
+  .routine-product a {
+    min-height: 46px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0.3rem;
+    padding-inline: 1.1rem;
+    border-radius: 999px;
+    background: var(--test-clay);
+    color: #fffaf2;
+    text-decoration: none;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+
+  .usage-card {
+    background: rgba(255, 250, 242, 0.6);
+  }
+
+  .usage-card ol {
+    padding-left: 1.2rem;
+  }
+
+  .usage-note {
+    border-left: 2px solid var(--test-gold);
+    padding-left: 0.85rem;
+  }
+
+  .week-panel {
+    display: grid;
+    gap: 1.5rem;
+    margin-top: 2rem;
+    border-radius: var(--test-radius);
+    padding: clamp(1.4rem, 3vw, 2rem);
+  }
+
+  .week-panel dl {
+    margin: 0;
+  }
+
+  .week-panel dl > div {
+    display: grid;
+    gap: 0.3rem;
+    padding-block: 0.85rem;
+    border-top: 1px solid var(--test-line);
+  }
+
+  .week-panel dl > div:first-child {
+    border-top: 0;
+  }
+
+  .week-panel dt {
+    font-weight: 800;
+  }
+
+  .week-panel dd {
+    margin: 0;
+    color: var(--test-muted);
+  }
+
+  .faq-list {
+    display: grid;
+    gap: 0.8rem;
+  }
+
+  .faq-card {
+    background: rgba(255, 250, 242, 0.64);
+  }
+
+  .disclosure {
+    display: grid;
+    gap: 1.5rem;
+    margin-block: 2rem clamp(4rem, 7vw, 7rem);
+    border-radius: clamp(1.6rem, 3vw, 3rem);
+    padding: clamp(1.6rem, 4vw, 3rem);
+    background: rgba(23, 35, 33, 0.92);
+    color: var(--test-cream);
+  }
+
+  .disclosure .kicker {
+    color: var(--test-gold);
+  }
+
+  .disclosure h2 {
+    margin: 0;
+    color: var(--test-cream);
+    font-size: clamp(2rem, 4vw, 4rem);
+    line-height: 0.95;
+    letter-spacing: -0.05em;
+  }
+
+  .disclosure-copy p {
+    color: rgba(255, 250, 242, 0.74);
+  }
+
+  .site-footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-block: 2rem;
+    border-top: 1px solid var(--test-line);
+    color: var(--test-muted);
+    font-size: 0.9rem;
+  }
+
+  .site-footer img {
+    width: 142px;
+    height: auto;
+  }
+
+  @media (min-width: 760px) {
+    .hero-grid,
+    .split,
+    .disclosure {
+      grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+    }
+
+    .symptom-grid,
+    .usage-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .market-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .routine-panel {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .routine-product {
+      border-top: 0;
+      border-left: 1px solid var(--test-line);
+    }
+
+    .routine-product:first-child {
+      border-left: 0;
+    }
+
+    .week-panel {
+      grid-template-columns: 0.55fr 1fr;
+      align-items: start;
+    }
+
+    .week-panel dl > div {
+      grid-template-columns: 12rem 1fr;
+      gap: 1rem;
+    }
+
+    .sticky-copy {
+      position: sticky;
+      top: 7.5rem;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .site-shell {
+      grid-template-columns: 1fr auto;
+      border-radius: 28px;
+    }
+
+    .nav {
+      display: none;
+    }
+  }
+
+  @media (max-width: 620px) {
+    .site-shell,
+    .hero,
+    .section,
+    .disclosure,
+    .site-footer {
+      width: min(100% - 1rem, 1180px);
+    }
+
+    .hero h1 {
+      font-size: clamp(3rem, 15vw, 4.15rem);
+    }
+
+    .hero-actions {
+      align-items: stretch;
+      flex-direction: column;
+    }
+
+    .button,
+    .nav-cta {
+      width: 100%;
+    }
+
+    .product-stage {
+      min-height: 29rem;
+    }
+
+    .hero-product img {
+      width: clamp(7.5rem, 34vw, 10rem);
+    }
+
+    .hero-product-1 {
+      left: 3%;
+    }
+
+    .hero-product-2 {
+      left: 32%;
+    }
+
+    .hero-product-3 {
+      right: 2%;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .home-page *,
+    .home-page *::before,
+    .home-page *::after {
+      scroll-behavior: auto !important;
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+    }
+  }
+</style>
