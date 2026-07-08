@@ -29,7 +29,7 @@ export const products: Product[] = [
     price: 'about $15',
     image: '/images/FlakeOff-Nizoral.webp',
     imageAlt: 'Nizoral anti-dandruff shampoo bottle',
-    link: 'AFFILIATE_LINK_KETOCONAZOLE',
+    link: 'https://amzn.to/4yaIzkt',
   },
   {
     id: 'cleanser',
@@ -39,7 +39,7 @@ export const products: Product[] = [
     price: 'about $10',
     image: '/images/FlakeOff-Vanicream-Cleanser.webp',
     imageAlt: 'Vanicream Gentle Facial Cleanser pump bottle',
-    link: 'AFFILIATE_LINK_CLEANSER',
+    link: 'https://amzn.to/3SLgmAN',
   },
   {
     id: 'moisturizer',
@@ -49,7 +49,7 @@ export const products: Product[] = [
     price: 'about $14',
     image: '/images/FlakeOff-Vanicream-Moisturizer.webp',
     imageAlt: 'Vanicream Daily Facial Moisturizer bottle',
-    link: 'AFFILIATE_LINK_MOISTURIZER',
+    link: 'https://amzn.to/3Ta1rjD',
   },
 ];
 
